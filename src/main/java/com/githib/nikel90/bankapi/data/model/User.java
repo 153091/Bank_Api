@@ -1,4 +1,4 @@
-package com.githib.nikel90.bankapi.data.Model;
+package com.githib.nikel90.bankapi.data.model;
 
 public class User {
     private int id;

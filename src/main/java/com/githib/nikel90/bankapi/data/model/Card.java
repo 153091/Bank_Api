@@ -1,10 +1,10 @@
-package com.githib.nikel90.bankapi.data.Model;
+package com.githib.nikel90.bankapi.data.model;
 
 public class Card {
     private int id;
     private int cardNumber;
     private int cardBalance;
-    private int idAccount;
+    private int AccountId;
 
 
     //Constructor
@@ -35,10 +35,10 @@ public class Card {
     }
 
     public int getIdAccount() {
-        return idAccount;
+        return AccountId;
     }
 
     public void setIdAccount(int idAccount) {
-        this.idAccount = idAccount;
+        this.AccountId = AccountId;
     }
 }

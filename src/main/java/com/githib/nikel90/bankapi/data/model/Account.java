@@ -1,9 +1,9 @@
-package com.githib.nikel90.bankapi.data.Model;
+package com.githib.nikel90.bankapi.data.model;
 
 public class Account {
     private int id;
     private int accountNumber;
-    private int idUsers;
+    private int UsersId;
 
 //    Constuctor??
 
@@ -24,10 +24,10 @@ public class Account {
     }
 
     public int getIdUsers() {
-        return idUsers;
+        return UsersId;
     }
 
     public void setIdUsers(int idUsers) {
-        this.idUsers = idUsers;
+        this.UsersId = UsersId;
     }
 }
