@@ -26,7 +26,7 @@ public class AccountRepository {
 
             statement.setLong(1, id);
 
-            try (ResultSet resultSet = statement.executeQuery(GET_ACCOUNT_BY_ID)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 List<Account> accounts = toListAccount(resultSet);
                 if (accounts.isEmpty()) {
                     return accounts.get(0);
@@ -42,14 +42,14 @@ public class AccountRepository {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_ACCOUNT)) {
 
-            try (ResultSet resultSet = statement.executeQuery(GET_ALL_ACCOUNT)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 return toListAccount(resultSet);
             }
         }
     }
 
 
-    public Account saveAccount(Account account) throws SQLException {
+    public Account save(Account account) throws SQLException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(SAVE_ACCOUNT,
                      Statement.RETURN_GENERATED_KEYS)) {

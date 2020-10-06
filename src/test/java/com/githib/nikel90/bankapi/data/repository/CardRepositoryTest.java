@@ -1,10 +1,9 @@
 package com.githib.nikel90.bankapi.data.repository;
 
-import com.githib.nikel90.bankapi.data.model.Account;
+import com.githib.nikel90.bankapi.data.model.Card;
 import org.h2.jdbcx.JdbcConnectionPool;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 
 import javax.sql.DataSource;
 import java.nio.file.Files;
@@ -15,14 +14,14 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AccountRepositoryTest {
+public class CardRepositoryTest {
     private static final DataSource jdbcConnectionPool = JdbcConnectionPool.create("jdbc:h2:mem:test_mem", "sa", "");
-    private static final AccountRepository accountRepository = new AccountRepository(jdbcConnectionPool);
+    private static final CardRepository cardRepository = new CardRepository(jdbcConnectionPool);
 
 
     @BeforeAll
     static void beforeAll() throws Exception {
-        final String sqlCreateTables = String.join("\n", Files.readAllLines(Paths.get(AccountRepositoryTest.class.getResource("/CreateTables.sql").toURI())));
+        final String sqlCreateTables = String.join("\n", Files.readAllLines(Paths.get(CardRepositoryTest.class.getResource("/CreateTables.sql").toURI())));
         try (Connection connection = jdbcConnectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(sqlCreateTables)) {
             statement.executeUpdate();
@@ -31,13 +30,15 @@ public class AccountRepositoryTest {
 
     @Test
     public void testSave() throws SQLException {
-        Account expectedAccount = new Account();
-        expectedAccount.setAccountNumber(401817247);
-        expectedAccount.setUsersId(1);
+        Card expectedCard = new Card();
+        expectedCard.setCardNumber(213124214);
+        expectedCard.setCardBalance(121123);
+        expectedCard.setAccountId(12);
 
-        final Account saved = accountRepository.save(expectedAccount);
-        final Account actual = accountRepository.getById(saved.getId());
-        assertEquals(expectedAccount.getAccountNumber(), actual.getAccountNumber());
-        assertEquals(expectedAccount.getUsersId(), actual.getUsersId());
+        final Card saved = cardRepository.save(expectedCard);
+        final Card actual = cardRepository.getById(saved.getId());
+        assertEquals(expectedCard.getCardNumber(), actual.getCardNumber());
+        assertEquals(expectedCard.getCardBalance(), actual.getCardBalance());
+        assertEquals(expectedCard.getAccountId(), actual.getAccountId());
     }
 }

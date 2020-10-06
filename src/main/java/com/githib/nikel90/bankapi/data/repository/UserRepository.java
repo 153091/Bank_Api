@@ -26,11 +26,11 @@ public class UserRepository {
 
             statement.setLong(1, id);
 
-            try (ResultSet resultSet = statement.executeQuery(GET_USER_BY_ID)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
 
                 List<User> users = toListUser(resultSet);
 
-                if (users.isEmpty()) {
+                if (!users.isEmpty()) {
                     return users.get(0);
                 } else {
                     throw new SQLException("User not found.");
@@ -44,14 +44,14 @@ public class UserRepository {
         try (Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS)) {
 
-            try (ResultSet resultSet = statement.executeQuery(GET_ALL_USERS)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 return toListUser(resultSet);
             }
         }
     }
 
 
-    public User save(User user ) throws SQLException {
+    public User save(User user) throws SQLException {
         try (Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(SAVE_USER,
                 Statement.RETURN_GENERATED_KEYS)) {

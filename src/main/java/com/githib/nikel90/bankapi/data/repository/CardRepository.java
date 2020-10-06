@@ -25,7 +25,7 @@ public class CardRepository {
 
             statement.setLong(1, id);
 
-            try (ResultSet resultSet = statement.executeQuery(GET_CARD_BY_ID)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 List<Card> card = toListCard(resultSet);
                 if (card.isEmpty()) {
                     return card.get(0);
@@ -41,14 +41,14 @@ public class CardRepository {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_CARD)) {
 
-            try (ResultSet resultSet = statement.executeQuery(GET_ALL_CARD)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 return toListCard(resultSet);
             }
         }
     }
 
 
-    public Card saveCard(Card card) throws SQLException {
+    public Card save(Card card) throws SQLException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(SAVE_CARD,
                      Statement.RETURN_GENERATED_KEYS)) {
