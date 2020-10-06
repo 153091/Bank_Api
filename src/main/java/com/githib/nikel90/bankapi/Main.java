@@ -19,10 +19,10 @@ import java.sql.*;
 public class Main {
 
     static final String JDBC_DRIVER = "org.h2.Driver";
-    static final String DB_URL = "jdbc:h2:~/test";
+    public static final String DB_URL = "jdbc:h2:~/test";
 
-    static final String USER = "sa";
-    static final String PASS = "";
+    public static final String USER = "sa";
+    public static final String PASS = "";
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException, URISyntaxException {
 
