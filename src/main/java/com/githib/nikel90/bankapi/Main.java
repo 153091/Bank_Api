@@ -3,6 +3,7 @@ package com.githib.nikel90.bankapi;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import org.h2.jdbcx.JdbcConnectionPool;
 import org.h2.tools.Console;
 import org.h2.tools.DeleteDbFiles;
 import org.h2.tools.Server;
@@ -71,6 +72,9 @@ public class Main {
             System.out.println("Creating table in given database...");
             statement = connection.createStatement();
 
+//            try (PreparedStatement statement = DriverManager.getConnection(DB_URL, USER, PASS))
+
+            JdbcConnectionPool.create(DB_URL, USER, PASS);
 
             String sqlCreate = String.join("\n",Files.readAllLines(Paths.get(Server.class.getResource("/CreateTables.sql").toURI())));
 
