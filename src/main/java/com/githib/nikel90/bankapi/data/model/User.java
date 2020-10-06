@@ -6,8 +6,8 @@ public class User {
     private String Name;
     private int Age;
 
-//    Какой конструктор???? И нужно ли переопределять Equals, Hashcode
-
+    public User() {
+    }
 
     public long getId() {
         return id;

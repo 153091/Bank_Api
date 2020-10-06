@@ -8,6 +8,11 @@ public class Account {
     public Account() {
     }
 
+    public Account(int accountNumber, long usersId) {
+        AccountNumber = accountNumber;
+        UsersId = usersId;
+    }
+
     public long getId() {
         return id;
     }

@@ -10,7 +10,7 @@ import java.util.List;
 public class CardRepository {
     private static final String GET_CARD_BY_ID = "SELECT * FROM CARD WHERE ID = ?";
     private static final String GET_ALL_CARD = "SELECT * FROM CARD";
-    private static final String CREATE_CARD = "INSERT INTO CARD (CARD_NUBMER, CARD_BAlANCE, ACCOUNT_ID) VALUES (?, ?, ?);";
+    private static final String SAVE_CARD = "INSERT INTO CARD (CARD_NUBMER, CARD_BAlANCE, ACCOUNT_ID) VALUES (?, ?, ?);";
 
     private final DataSource dataSource;
 
@@ -19,25 +19,25 @@ public class CardRepository {
     }
 
 
-    public Card getById(int id) throws SQLException {
+    public Card getById(long id) throws SQLException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_CARD_BY_ID)) {
 
-            statement.setLong(id, 1);
+            statement.setLong(1, id);
 
             try (ResultSet resultSet = statement.executeQuery(GET_CARD_BY_ID)) {
                 List<Card> card = toListCard(resultSet);
                 if (card.isEmpty()) {
                     return card.get(0);
                 } else {
-                    throw new SQLException("User not found.");
+                    throw new SQLException("Card not found.");
                 }
             }
         }
     }
 
 
-    public List<Card> getAllUsers(Card card) throws SQLException {
+    public List<Card> getAll(Card card) throws SQLException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_CARD)) {
 
@@ -48,10 +48,14 @@ public class CardRepository {
     }
 
 
-    public Card createCard(Card card) throws SQLException {
+    public Card saveCard(Card card) throws SQLException {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(CREATE_CARD,
+             PreparedStatement statement = connection.prepareStatement(SAVE_CARD,
                      Statement.RETURN_GENERATED_KEYS)) {
+
+            statement.setInt(1, card.getCardNumber());
+            statement.setInt(2, card.getCardBalance());
+            statement.setLong(3, card.getAccountId());
 
             int affectedRows = statement.executeUpdate();
 

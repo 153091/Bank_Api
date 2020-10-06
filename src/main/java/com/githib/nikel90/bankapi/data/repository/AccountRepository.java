@@ -11,7 +11,7 @@ import java.util.List;
 public class AccountRepository {
     private static final String GET_ACCOUNT_BY_ID = "SELECT * FROM ACCOUNT WHERE ID = ?";
     private static final String GET_ALL_ACCOUNT = "SELECT * FROM ACCOUNT";
-    private static final String CREATE_ACCOUNT = "INSERT INTO ACCOUNT (ACCOUNT_NUMBER, USER_ID) VALUES (?, ?);";
+    private static final String SAVE_ACCOUNT = "INSERT INTO ACCOUNT (ACCOUNT_NUMBER, USER_ID) VALUES (?, ?);";
 
     private final DataSource dataSource;
 
@@ -20,25 +20,25 @@ public class AccountRepository {
     }
 
 
-    public Account getById(int id) throws SQLException {
+    public Account getById(long id) throws SQLException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ACCOUNT_BY_ID)) {
 
-            statement.setLong(id, 1);
+            statement.setLong(1, id);
 
             try (ResultSet resultSet = statement.executeQuery(GET_ACCOUNT_BY_ID)) {
                 List<Account> accounts = toListAccount(resultSet);
                 if (accounts.isEmpty()) {
                     return accounts.get(0);
                 } else {
-                    throw new SQLException("User not found.");
+                    throw new SQLException("Account not found.");
                 }
             }
         }
     }
 
 
-    public List<Account> getAllUsers(Account account) throws SQLException {
+    public List<Account> getAll(Account account) throws SQLException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_ACCOUNT)) {
 
@@ -49,10 +49,13 @@ public class AccountRepository {
     }
 
 
-    public Account createAccount(Account account) throws SQLException {
+    public Account saveAccount(Account account) throws SQLException {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(CREATE_ACCOUNT,
+             PreparedStatement statement = connection.prepareStatement(SAVE_ACCOUNT,
                      Statement.RETURN_GENERATED_KEYS)) {
+
+            statement.setInt(1, account.getAccountNumber());
+            statement.setLong(2, account.getUsersId());
 
             int affectedRows = statement.executeUpdate();
 

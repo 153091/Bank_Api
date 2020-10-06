@@ -6,9 +6,8 @@ public class Card {
     private int CardBalance;
     private long AccountId;
 
-
-    //Constructor
-
+    public Card() {
+    }
 
     public long getId() {
         return id;

@@ -11,7 +11,7 @@ import java.util.List;
 public class UserRepository {
     private static final String GET_USER_BY_ID = "SELECT * FROM USER WHERE ID = ?;";
     private static final String GET_ALL_USERS = "SELECT * FROM USER;";
-    private static final String CREATE_USER = "INSERT INTO USER (SURNAME, NAME, AGE) VALUES (?, ?, ?);";
+    private static final String SAVE_USER = "INSERT INTO USER (SURNAME, NAME, AGE) VALUES (?, ?, ?);";
 
     private final DataSource dataSource;
 
@@ -20,11 +20,11 @@ public class UserRepository {
     }
 
 
-    public User getById(int id) throws SQLException {
+    public User getById(long id) throws SQLException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_USER_BY_ID)) {
 
-            statement.setLong(id, 1);
+            statement.setLong(1, id);
 
             try (ResultSet resultSet = statement.executeQuery(GET_USER_BY_ID)) {
 
@@ -40,7 +40,7 @@ public class UserRepository {
     }
 
 
-    public List<User> getAllUsers(User user) throws SQLException {
+    public List<User> getAll(User user) throws SQLException {
         try (Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS)) {
 
@@ -51,10 +51,14 @@ public class UserRepository {
     }
 
 
-    public User createUsers(User user) throws SQLException {
+    public User save(User user ) throws SQLException {
         try (Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(CREATE_USER,
+        PreparedStatement statement = connection.prepareStatement(SAVE_USER,
                 Statement.RETURN_GENERATED_KEYS)) {
+
+            statement.setString(1, user.getSurname());
+            statement.setString(2, user.getName());
+            statement.setInt(3, user.getAge());
 
             int affectedRows = statement.executeUpdate();
 
