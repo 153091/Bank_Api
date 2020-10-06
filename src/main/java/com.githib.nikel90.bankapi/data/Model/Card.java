@@ -7,7 +7,7 @@ public class Card {
     private int idAccount;
 
 
-//    Constructor;
+    //Constructor
 
 
     public int getId() {
