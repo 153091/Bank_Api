@@ -1,4 +1,4 @@
-package DataModel;
+package com.githib.nikel90.bankapi.data.Model;
 
 public class Account {
     private int id;
