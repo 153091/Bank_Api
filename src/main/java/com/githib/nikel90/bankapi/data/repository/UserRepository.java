@@ -9,9 +9,9 @@ import java.util.List;
 
 
 public class UserRepository {
-    private static final String GET_USER_BY_ID = "SELECT * FROM USER WHERE ID = ?";
-    private static final String GET_ALL_USERS = "SELECT * FROM USER"; // ;??????????
-    private static final String CREATE_USERS = "";
+    private static final String GET_USER_BY_ID = "SELECT * FROM USER WHERE ID = ?;";
+    private static final String GET_ALL_USERS = "SELECT * FROM USER;";
+    private static final String CREATE_USER = "INSERT INTO USER (SURNAME, NAME, AGE) VALUES (?, ?, ?);";
 
     private final DataSource dataSource;
 
@@ -32,12 +32,10 @@ public class UserRepository {
 
                 if (users.isEmpty()) {
                     return users.get(0);
+                } else {
+                    throw new SQLException("User not found.");
                 }
-            } catch (SQLException ex) {
-                throw ex;
             }
-        } catch (SQLException ex) {
-            throw ex;
         }
     }
 
@@ -48,22 +46,19 @@ public class UserRepository {
 
             try (ResultSet resultSet = statement.executeQuery(GET_ALL_USERS)) {
                 return toListUser(resultSet);
-            } catch (SQLException ex) {
-                throw ex;
             }
-        } catch (SQLException ex) {
-            throw ex;
         }
     }
 
 
     public User createUsers(User user) throws SQLException {
         try (Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(CREATE_USERS)) {
+        PreparedStatement statement = connection.prepareStatement(CREATE_USER,
+                Statement.RETURN_GENERATED_KEYS)) {
 
-            int index = statement.executeUpdate(CREATE_USERS);
+            int affectedRows = statement.executeUpdate();
 
-            if (index == 0) {
+            if (affectedRows == 0) {
                 throw new SQLException("Creating user failed, no rows affected.");
             }
 
@@ -71,13 +66,10 @@ public class UserRepository {
                 if (generatedKeys.next()) {
                     user.setId(generatedKeys.getLong(1));
                     return user;
-                }
-                else {
+                } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
-        } catch (SQLException ex) {
-            throw ex;
         }
     }
 
