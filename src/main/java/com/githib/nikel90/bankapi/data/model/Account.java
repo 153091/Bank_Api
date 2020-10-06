@@ -1,33 +1,34 @@
 package com.githib.nikel90.bankapi.data.model;
 
 public class Account {
-    private int id;
-    private int accountNumber;
-    private int UsersId;
+    private long id;
+    private int AccountNumber;
+    private long UsersId;
 
-//    Constuctor??
+    public Account() {
+    }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     public int getAccountNumber() {
-        return accountNumber;
+        return AccountNumber;
     }
 
     public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
+        this.AccountNumber = accountNumber;
     }
 
-    public int getIdUsers() {
+    public long getUsersId() {
         return UsersId;
     }
 
-    public void setIdUsers(int idUsers) {
+    public void setUsersId(long UsersId) {
         this.UsersId = UsersId;
     }
 }

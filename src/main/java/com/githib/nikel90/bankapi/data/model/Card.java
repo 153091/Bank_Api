@@ -1,44 +1,44 @@
 package com.githib.nikel90.bankapi.data.model;
 
 public class Card {
-    private int id;
-    private int cardNumber;
-    private int cardBalance;
-    private int AccountId;
+    private long id;
+    private int CardNumber;
+    private int CardBalance;
+    private long AccountId;
 
 
     //Constructor
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     public int getCardNumber() {
-        return cardNumber;
+        return CardNumber;
     }
 
     public void setCardNumber(int cardNumber) {
-        this.cardNumber = cardNumber;
+        this.CardNumber = CardNumber;
     }
 
     public int getCardBalance() {
-        return cardBalance;
+        return CardBalance;
     }
 
     public void setCardBalance(int cardBalance) {
-        this.cardBalance = cardBalance;
+        this.CardBalance = CardBalance;
     }
 
-    public int getIdAccount() {
+    public long getAccountId() {
         return AccountId;
     }
 
-    public void setIdAccount(int idAccount) {
+    public void setAccountId(long AccountId) {
         this.AccountId = AccountId;
     }
 }

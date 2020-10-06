@@ -1,43 +1,43 @@
 package com.githib.nikel90.bankapi.data.model;
 
 public class User {
-    private int id;
-    private String surname;
-    private String name;
-    private int age;
+    private long id;
+    private String Surname;
+    private String Name;
+    private int Age;
 
 //    Какой конструктор???? И нужно ли переопределять Equals, Hashcode
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     public String getSurname() {
-        return surname;
+        return Surname;
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        this.Surname = surname;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Name = name;
     }
 
     public int getAge() {
-        return age;
+        return Age;
     }
 
     public void setAge(int age) {
-        this.age = age;
+        this.Age = age;
     }
 }
