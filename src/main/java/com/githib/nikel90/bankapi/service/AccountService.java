@@ -11,12 +11,12 @@ import java.util.List;
 public class AccountService {
     AccountRepository accountRepository;
 
-    public AccountDto registration(Account account) throws SQLException {
+    public AccountDto register(Account account) throws SQLException {
         return fromAccountDto(accountRepository.save(account));
     }
 
-    public AccountDto getAccountById(Account account) throws SQLException {
-        return fromAccountDto(accountRepository.getById(account.getId()));
+    public AccountDto getAccountById(long id) throws SQLException {
+        return fromAccountDto(accountRepository.getById(id));
     }
 
     public List<AccountDto> getAll() throws SQLException {

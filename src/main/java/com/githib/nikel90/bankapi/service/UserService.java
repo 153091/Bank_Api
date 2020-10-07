@@ -12,12 +12,12 @@ public class UserService {
     UserRepository userRepository;
 
 
-    public UserDto registration(User user) throws SQLException {
+    public UserDto register(User user) throws SQLException {
         return fromUserDto(userRepository.save(user));
     }
 
-    public UserDto getUserById(User user) throws SQLException {
-        return fromUserDto(userRepository.getById(user.getId()));
+    public UserDto getUserById(long id) throws SQLException {
+        return fromUserDto(userRepository.getById(id));
     }
 
     public List<UserDto> getAll() throws SQLException {

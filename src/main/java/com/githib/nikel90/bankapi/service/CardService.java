@@ -11,12 +11,12 @@ import java.util.List;
 public class CardService {
     CardRepository cardRepository;
 
-    public CardDto registration(Card card) throws SQLException {
+    public CardDto register(Card card) throws SQLException {
         return fromCardDto(cardRepository.save(card));
     }
 
-    public CardDto getCardById(Card card) throws SQLException {
-        return fromCardDto(cardRepository.getById(card.getId()));
+    public CardDto getCardById(long id) throws SQLException {
+        return fromCardDto(cardRepository.getById(id));
     }
 
     public List<CardDto> getAll() throws SQLException {
