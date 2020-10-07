@@ -1,8 +1,11 @@
 package com.githib.nikel90.bankapi.data.repository;
 
-public interface  CrudRepository <E, ID> {
-    E save (E e);
-    E getById (ID id);
-    Iterable<E> getAll ();
-    void removeById (ID id);
+import java.sql.SQLException;
+
+public interface CrudRepository<E, ID> {
+    E save (E e) throws SQLException;
+    E getById (ID id) throws SQLException;
+    Iterable<E> getAll () throws SQLException;
+    boolean removeById (ID id) throws SQLException;
+    void update(E e) throws SQLException;
 }

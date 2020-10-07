@@ -2,11 +2,24 @@ package com.githib.nikel90.bankapi.data.model;
 
 public class Card {
     private long id;
-    private int CardNumber;
-    private int CardBalance;
-    private long AccountId;
+    private int cardNumber;
+    private int cardBalance;
+    private long accountId;
 
     public Card() {
+    }
+
+    public Card(int cardNumber, int cardBalance, long accountId) {
+        this.cardNumber = cardNumber;
+        this.cardBalance = cardBalance;
+        this.accountId = accountId;
+    }
+
+    public Card(long id, int cardNumber, int cardBalance, long accountId) {
+        this.id = id;
+        this.cardNumber = cardNumber;
+        this.cardBalance = cardBalance;
+        this.accountId = accountId;
     }
 
     public long getId() {
@@ -18,26 +31,26 @@ public class Card {
     }
 
     public int getCardNumber() {
-        return CardNumber;
+        return cardNumber;
     }
 
     public void setCardNumber(int cardNumber) {
-        this.CardNumber = CardNumber;
+        this.cardNumber = cardNumber;
     }
 
     public int getCardBalance() {
-        return CardBalance;
+        return cardBalance;
     }
 
     public void setCardBalance(int cardBalance) {
-        this.CardBalance = CardBalance;
+        this.cardBalance = cardBalance;
     }
 
     public long getAccountId() {
-        return AccountId;
+        return accountId;
     }
 
-    public void setAccountId(long AccountId) {
-        this.AccountId = AccountId;
+    public void setAccountId(long accountId) {
+        this.accountId = accountId;
     }
 }

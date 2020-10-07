@@ -2,13 +2,31 @@ package com.githib.nikel90.bankapi.data.model;
 
 public class User {
     private long id;
-    private String Surname;
-    private String Name;
-    private int Age;
+    private String surname;
+    private String name;
+    private int age;
+    private String login;
+    private String password;
 
     public User() {
     }
 
+    public User(String surname, String name, int age, String login, String password) {
+        this.surname = surname;
+        this.name = name;
+        this.age = age;
+        this.login = login;
+        this.password = password;
+    }
+
+    public User(long id, String surname, String name, int age, String login, String password) {
+        this.id = id;
+        this.surname = surname;
+        this.name = name;
+        this.age = age;
+        this.login = login;
+        this.password = password;
+    }
 
     public long getId() {
         return id;
@@ -19,26 +37,42 @@ public class User {
     }
 
     public String getSurname() {
-        return Surname;
+        return surname;
     }
 
     public void setSurname(String surname) {
-        this.Surname = surname;
+        this.surname = surname;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        this.Name = name;
+        this.name = name;
     }
 
     public int getAge() {
-        return Age;
+        return age;
     }
 
     public void setAge(int age) {
-        this.Age = age;
+        this.age = age;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

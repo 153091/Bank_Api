@@ -11,12 +11,14 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserRepositoryTest {
     private static final DataSource jdbcConnectionPool = JdbcConnectionPool.create("jdbc:h2:mem:test_mem", "sa", "");
     private static final UserRepository userRepository = new UserRepository(jdbcConnectionPool);
-
 
     @BeforeAll
     static void beforeAll() throws Exception {
@@ -29,16 +31,12 @@ public class UserRepositoryTest {
 
     @Test
     public void testSave() throws SQLException {
-        User expectedUser = new User();
-        expectedUser.setName("Nikita");
-        expectedUser.setSurname("Bazhenov");
-        expectedUser.setAge(32);
+        User expectedUser = new User("Nikita", "Bazhenov", 24, "nikel-90", "root");
 
         final User saved = userRepository.save(expectedUser);
         final User actual = userRepository.getById(saved.getId());
-        assertEquals(expectedUser.getName(), actual.getName());
-        assertEquals(expectedUser.getSurname(), actual.getSurname());
-        assertEquals(expectedUser.getAge(), actual.getAge());
+
+        assertEqualsUser(expectedUser, actual);
 
 //        try (Connection connection = jdbcConnectionPool.getConnection();
 //             PreparedStatement statement = connection.prepareStatement("SELECT * FROM USER WHERE ID = " + saved.getId())) {
@@ -59,14 +57,67 @@ public class UserRepositoryTest {
     }
 
     @Test
+    public void testGetAll() throws SQLException {
+
+        User user = new User("Bazhenov", "Nikita", 24,"nikel-90", "root");
+        User user1 = new User("Kulakov", "Alexandr", 28,"kulakov", "root");
+
+        userRepository.save(user);
+        userRepository.save(user1);
+
+        List<User> actual = userRepository.getAll();
+
+        boolean result = false;
+
+        if (actual.size() == 2) {
+            result = true;
+        }
+        assertTrue(result);
+    }
+
+    @Test
     public void testGetById() throws SQLException {
-        User expectedUser = new User();
-        expectedUser.setName("Nikita");
-        expectedUser.setSurname("Bazhenov");
-        expectedUser.setAge(32);
+        User expectedUser = new User("Bazhenov", "Nikita", 24,"nikel-90", "root");
 
         final User saved = userRepository.save(expectedUser);
-        final User actual = userRepository.getById(0);
+        final User actual = userRepository.getById((saved.getId()));
+
+        assertEqualsUser(expectedUser, actual);
+    }
+
+
+    @Test
+    public void testUpdate() throws SQLException {
+        User expectedUser = new User("Bazhenov", "Nikita", 24, "nikel-90", "root");
+        userRepository.save(expectedUser);
+
+        User user = new User(expectedUser.getId(),"Bazhenov", "Sergey", 45, "sergei", "root");
+        userRepository.update(user);
+
+        final User actual = userRepository.getById((user.getId()));
+
+        assertEqualsUser(user, actual);
+    }
+
+    @Test
+    public void testRemoveById() throws SQLException {
+        User expectedUser = new User("Nikita", "Bazhenov", 24, "nikel-90", "root");
+        userRepository.save(expectedUser);
+
+        userRepository.removeById(expectedUser.getId());
+
+        boolean result = false;
+
+       try {
+           userRepository.getById(expectedUser.getId());
+       } catch (SQLException ex) {
+           result = true;
+       } finally {
+           assertEquals(result, true);
+       }
+    }
+
+    private static void assertEqualsUser(User expectedUser, User actual) {
         assertEquals(expectedUser.getName(), actual.getName());
         assertEquals(expectedUser.getSurname(), actual.getSurname());
         assertEquals(expectedUser.getAge(), actual.getAge());

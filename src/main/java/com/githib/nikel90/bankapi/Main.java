@@ -61,7 +61,7 @@ public class Main {
 
         try {
             //STEP 1: Register JDBS_Driver
-            Class.forName(JDBC_DRIVER);
+            Class.forName(JDBC_DRIVER); //todo: Надо ли ?
 
             //STEP 2: Open a connection
             System.out.println("Connencting to database...");

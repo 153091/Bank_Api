@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserRepository {
+public class UserRepository implements CrudRepository<User, Long> {
     private static final String GET_USER_BY_ID = "SELECT * FROM USER WHERE ID = ?;";
     private static final String GET_ALL_USERS = "SELECT * FROM USER;";
-    private static final String SAVE_USER = "INSERT INTO USER (SURNAME, NAME, AGE) VALUES (?, ?, ?);";
+    private static final String SAVE_USER = "INSERT INTO USER (SURNAME, NAME, AGE, LOGIN, PASSWORD) VALUES (?, ?, ?, ?, ?);";
+    private final static String UPDATE_USER = "UPDATE USER SET SURNAME = ?, NAME = ?, AGE = ?, LOGIN = ?, PASSWORD = ?;";
+    private final static String DELETE_USER = "DELETE FROM USER WHERE ID = ?;";
 
     private final DataSource dataSource;
 
@@ -19,8 +21,8 @@ public class UserRepository {
         this.dataSource = dataSource;
     }
 
-
-    public User getById(long id) throws SQLException {
+    @Override
+    public User getById(Long id) throws SQLException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_USER_BY_ID)) {
 
@@ -39,19 +41,31 @@ public class UserRepository {
         }
     }
 
-
-    public List<User> getAll(User user) throws SQLException {
+    @Override
+    public List<User> getAll() throws SQLException {
         try (Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS)) {
-
             try (ResultSet resultSet = statement.executeQuery()) {
                 return toListUser(resultSet);
             }
         }
     }
 
+    @Override
+    public boolean removeById(Long id) throws SQLException {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_USER)) {
 
-    public User save(User user) throws SQLException {
+            statement.setLong(1, id);
+
+            int affectedRows = statement.executeUpdate();
+
+            return affectedRows != 0;
+        }
+    }
+
+    @Override
+    public User save (User user) throws SQLException {
         try (Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(SAVE_USER,
                 Statement.RETURN_GENERATED_KEYS)) {
@@ -59,6 +73,8 @@ public class UserRepository {
             statement.setString(1, user.getSurname());
             statement.setString(2, user.getName());
             statement.setInt(3, user.getAge());
+            statement.setString(4, user.getLogin());
+            statement.setString(5, user.getPassword());
 
             int affectedRows = statement.executeUpdate();
 
@@ -77,6 +93,22 @@ public class UserRepository {
         }
     }
 
+    @Override
+    public void update(User user) throws SQLException {
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USER)) {
+
+            statement.setString(1, user.getSurname());
+            statement.setString(2, user.getName());
+            statement.setInt(3, user.getAge());
+            statement.setString(4, user.getLogin());
+            statement.setString(5, user.getPassword());
+
+            statement.execute();
+        }
+    }
+
 
     private List<User> toListUser(ResultSet resultSet) throws SQLException {
         List<User> ret = new ArrayList<>();
@@ -85,9 +117,11 @@ public class UserRepository {
             User user = new User();
 
             user.setId(resultSet.getLong("id"));
-            user.setSurname(resultSet.getString("Surname"));
-            user.setName(resultSet.getString("Name"));
-            user.setAge(resultSet.getInt("Age"));
+            user.setSurname(resultSet.getString("surname"));
+            user.setName(resultSet.getString("name"));
+            user.setAge(resultSet.getInt("age"));
+            user.setLogin(resultSet.getString("login"));
+            user.setPassword(resultSet.getString("password"));
 
             ret.add(user);
         }
