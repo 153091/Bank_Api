@@ -5,7 +5,8 @@ public class UserDto {
     private final String surname;
     private final String name;
     private final int age;
-    private String login;
+    private final String login;
+
 
 
     public UserDto(long id, String surname, String name, int age, String login) {
