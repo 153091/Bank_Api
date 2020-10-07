@@ -42,8 +42,14 @@ public class Main {
 
     static class MyHandler implements HttpHandler {
         public void handle(HttpExchange httpExchange) throws IOException {
-
+            System.out.println("This is uri " + httpExchange.getRequestURI());
+            System.out.println("Path " + httpExchange.getRequestURI().getPath());
+            System.out.println("Rawpath " + httpExchange.getRequestURI().getRawPath());
+            System.out.println("Query " + httpExchange.getRequestURI().getQuery());
+            System.out.println("RawQuery " + httpExchange.getRequestURI().getRawQuery());
+            System.out.println("Method " + httpExchange.getRequestMethod());
             String response = "This is the response\n";
+
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());

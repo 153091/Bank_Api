@@ -7,8 +7,6 @@ public class UserDto {
     private final int age;
     private final String login;
 
-
-
     public UserDto(long id, String surname, String name, int age, String login) {
         this.id = id;
         this.surname = surname;
