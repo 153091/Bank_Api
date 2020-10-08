@@ -1,11 +1,13 @@
 package com.github.nikel90.bankapi.controller;
 
+import com.github.nikel90.bankapi.data.model.Card;
+import com.github.nikel90.bankapi.data.transfer.CardDto;
 import com.github.nikel90.bankapi.service.CardService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLException;
+import java.util.List;
 
 @Controller
 public class CardController {
@@ -16,20 +18,17 @@ public class CardController {
     }
 
     @PostMapping("/card/register")
-    public String register(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "greeting";
+    public CardDto register(@RequestBody Card card) throws SQLException {
+        return cardService.register(card);
     }
 
     @GetMapping("/card")
-    public String getAllAccount(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "greeting";
+    public List<CardDto> getAllCard() throws SQLException {
+        return cardService.getAll();
     }
 
-    @GetMapping("/card/")
-    public String getUserByAccount(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "greeting";
+    @GetMapping("/card/{id}")
+    public CardDto getCardById(@PathVariable("id") Long id) throws SQLException {
+        return cardService.getCardById(id);
     }
 }

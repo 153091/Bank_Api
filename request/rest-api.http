@@ -21,3 +21,25 @@ GET http://localhost:8080/user
 ###
 
 GET http://localhost:8080/user/1
+
+
+###
+
+POST http://localhost:8080/account/register
+Content-Type: application/json
+
+{
+  "account_number":40165764,
+  "user_id":1
+}
+
+
+
+###
+POST http://localhost:8080/account/register
+Content-Type: application/json
+
+{
+  "account_number":40165764,
+  "user_id":1
+}

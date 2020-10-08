@@ -2,10 +2,8 @@ package com.github.nikel90.bankapi.controller;
 
 import com.github.nikel90.bankapi.data.model.Account;
 import com.github.nikel90.bankapi.data.transfer.AccountDto;
-import com.github.nikel90.bankapi.data.transfer.UserDto;
 import com.github.nikel90.bankapi.service.AccountService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
