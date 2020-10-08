@@ -23,7 +23,7 @@ public class CardRepositoryTest {
 
     @BeforeAll
     static void beforeAll() throws Exception {
-        final String sqlCreateTables = String.join("\n", Files.readAllLines(Paths.get(CardRepositoryTest.class.getResource("/CreateTables.sql").toURI())));
+        final String sqlCreateTables = String.join("\n", Files.readAllLines(Paths.get(CardRepositoryTest.class.getResource("/data.sql").toURI())));
         try (Connection connection = jdbcConnectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(sqlCreateTables)) {
             statement.executeUpdate();

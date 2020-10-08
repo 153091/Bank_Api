@@ -1,13 +1,14 @@
 package com.github.nikel90.bankapi.data.repository;
 
 import com.github.nikel90.bankapi.data.model.User;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Repository
 public class UserRepository implements CrudRepository<User, Long> {
     private static final String GET_USER_BY_ID = "SELECT * FROM USER WHERE ID = ?;";
     private static final String GET_ALL_USERS = "SELECT * FROM USER;";

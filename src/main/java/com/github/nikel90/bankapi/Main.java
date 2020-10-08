@@ -82,7 +82,7 @@ public class Main {
 
             JdbcConnectionPool.create(DB_URL, USER, PASS);
 
-            String sqlCreate = String.join("\n",Files.readAllLines(Paths.get(Server.class.getResource("/CreateTables.sql").toURI())));
+            String sqlCreate = String.join("\n",Files.readAllLines(Paths.get(Server.class.getResource("/data.sql").toURI())));
 
             try (PreparedStatement statement1 = connection.prepareStatement(sqlCreate)) {
                 statement1.execute();

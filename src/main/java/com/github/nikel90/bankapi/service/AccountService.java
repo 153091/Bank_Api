@@ -3,13 +3,19 @@ package com.github.nikel90.bankapi.service;
 import com.github.nikel90.bankapi.data.model.Account;
 import com.github.nikel90.bankapi.data.repository.AccountRepository;
 import com.github.nikel90.bankapi.data.transfer.AccountDto;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class AccountService {
-    AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
+
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     public AccountDto register(Account account) throws SQLException {
         return fromAccountDto(accountRepository.save(account));

@@ -1,12 +1,14 @@
 package com.github.nikel90.bankapi.data.repository;
 
 import com.github.nikel90.bankapi.data.model.Card;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class CardRepository implements CrudRepository<Card, Long> {
     private static final String GET_CARD_BY_ID = "SELECT * FROM CARD WHERE ID = ?;";
     private static final String GET_ALL_CARD = "SELECT * FROM CARD;";

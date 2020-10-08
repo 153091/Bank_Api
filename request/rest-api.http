@@ -1,0 +1,23 @@
+POST http://localhost:8080/user/register
+Content-Type: application/json
+
+{
+  "surname":"Bazhenov",
+  "name":"Nikita",
+  "age":24,
+  "login":"nikel-90",
+  "password": "12345"
+}
+
+<> 2020-10-08T063345.200.json
+<> 2020-10-08T063326.500.json
+<> 2020-10-08T063134.500.json
+
+###
+
+GET http://localhost:8080/user
+
+
+###
+
+GET http://localhost:8080/user/1

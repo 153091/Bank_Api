@@ -1,13 +1,14 @@
 package com.github.nikel90.bankapi.data.repository;
 
 import com.github.nikel90.bankapi.data.model.Account;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Repository
 public class AccountRepository implements CrudRepository <Account, Long> {
     private static final String GET_ACCOUNT_BY_ID = "SELECT * FROM ACCOUNT WHERE ID = ?;";
     private static final String GET_ALL_ACCOUNT = "SELECT * FROM ACCOUNT;";

@@ -1,6 +1,6 @@
 package com.github.nikel90.bankapi.controller;
 
-import com.github.nikel90.bankapi.data.transfer.CardDto;
+import com.github.nikel90.bankapi.service.CardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CardController {
-    private final CardDto cardDto;
+    private final CardService cardService;
 
-    public CardController(CardDto cardDto) {
-        this.cardDto = cardDto;
+    public CardController(CardService cardService) {
+        this.cardService = cardService;
     }
 
     @PostMapping("/card/register")
