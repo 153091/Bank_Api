@@ -2,8 +2,8 @@ package com.github.nikel90.bankapi.data.repository;
 
 import com.github.nikel90.bankapi.data.model.User;
 import org.h2.jdbcx.JdbcConnectionPool;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import javax.sql.DataSource;
 import java.nio.file.Files;
@@ -16,11 +16,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserRepositoryTest {
-    private static final DataSource jdbcConnectionPool = JdbcConnectionPool.create("jdbc:h2:mem:test_mem", "sa", "");
-    private static final UserRepository userRepository = new UserRepository(jdbcConnectionPool);
+    private UserRepository userRepository;
 
-    @BeforeAll
-    static void beforeAll() throws Exception {
+    @Before
+    public void before() throws Exception {
+        DataSource jdbcConnectionPool = JdbcConnectionPool.create("jdbc:h2:mem:test_mem", "sa", "");
+        userRepository = new UserRepository(jdbcConnectionPool);
+
         final String sqlCreateTables = String.join("\n", Files.readAllLines(Paths.get(UserRepositoryTest.class.getResource("/data.sql").toURI())));
         try (Connection connection = jdbcConnectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(sqlCreateTables)) {

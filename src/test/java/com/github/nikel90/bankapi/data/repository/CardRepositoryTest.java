@@ -4,8 +4,8 @@ import com.github.nikel90.bankapi.data.model.Account;
 import com.github.nikel90.bankapi.data.model.Card;
 import com.github.nikel90.bankapi.data.model.User;
 import org.h2.jdbcx.JdbcConnectionPool;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import javax.sql.DataSource;
 import java.nio.file.Files;
@@ -17,12 +17,13 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardRepositoryTest {
-    private static final DataSource jdbcConnectionPool = JdbcConnectionPool.create("jdbc:h2:mem:test_mem", "sa", "");
-    private static final CardRepository cardRepository = new CardRepository(jdbcConnectionPool);
+    private CardRepository cardRepository;
+    private  DataSource jdbcConnectionPool;
 
-
-    @BeforeAll
-    static void beforeAll() throws Exception {
+    @Before
+    public void beforeAll() throws Exception {
+        jdbcConnectionPool = JdbcConnectionPool.create("jdbc:h2:mem:test_mem", "sa", "");
+        cardRepository = new CardRepository(jdbcConnectionPool);
         final String sqlCreateTables = String.join("\n", Files.readAllLines(Paths.get(CardRepositoryTest.class.getResource("/data.sql").toURI())));
         try (Connection connection = jdbcConnectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(sqlCreateTables)) {

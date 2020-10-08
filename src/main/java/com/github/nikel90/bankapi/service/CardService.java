@@ -2,6 +2,7 @@ package com.github.nikel90.bankapi.service;
 
 import com.github.nikel90.bankapi.data.model.Card;
 import com.github.nikel90.bankapi.data.repository.CardRepository;
+import com.github.nikel90.bankapi.data.transfer.CardAddDto;
 import com.github.nikel90.bankapi.data.transfer.CardDto;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +19,11 @@ public class CardService {
     }
 
     public CardDto register(Card card) throws SQLException {
-        return fromCardDto(cardRepository.save(card));
+        return fromCard(cardRepository.save(card));
     }
 
     public CardDto getCardById(long id) throws SQLException {
-        return fromCardDto(cardRepository.getById(id));
+        return fromCard(cardRepository.getById(id));
     }
 
     public List<CardDto> getAll() throws SQLException {
@@ -30,12 +31,16 @@ public class CardService {
         List<CardDto> listCardDto = new ArrayList<>();
 
         for (Card card : listCard) {
-            listCardDto.add(fromCardDto(card));
+            listCardDto.add(fromCard(card));
         }
         return listCardDto;
     }
 
-    private CardDto fromCardDto(Card card) {
+    public CardDto addBalance(CardAddDto cardAddDto) throws SQLException {
+        return fromCard(cardRepository.addBalance(cardAddDto.getCardId(), cardAddDto.getAmount()));
+    }
+
+    private CardDto fromCard(Card card) {
         return new CardDto(card.getId(), card.getCardNumber(), card.getCardBalance(), card.getAccountId());
     }
 }

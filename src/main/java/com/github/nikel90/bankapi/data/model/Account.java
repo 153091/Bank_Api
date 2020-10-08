@@ -42,4 +42,13 @@ public class Account {
     public void setUserId(long userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", accountNumber=" + accountNumber +
+                ", userId=" + userId +
+                '}';
+    }
 }

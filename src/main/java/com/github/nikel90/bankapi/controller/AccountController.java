@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-@Controller
+@RestController
 public class AccountController {
     private final AccountService accountService;
 
@@ -29,7 +29,7 @@ public class AccountController {
     }
 
     @GetMapping("/account/{id}")
-    public AccountDto getUserById(@PathVariable("id") Long id) throws SQLException {
+    public AccountDto getAccountById(@PathVariable("id") Long id) throws SQLException {
         return accountService.getAccountById(id);
     }
 }

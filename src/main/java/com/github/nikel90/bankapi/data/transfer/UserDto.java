@@ -1,5 +1,7 @@
 package com.github.nikel90.bankapi.data.transfer;
 
+import com.github.nikel90.bankapi.data.model.User;
+
 public class UserDto {
     private long id;
     private String surname;
@@ -53,6 +55,11 @@ public class UserDto {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public static UserDto fromUser(User user) {
+        return new UserDto(user.getId(), user.getSurname(), user.getName(), user.getAge(), user.getLogin());
+
     }
 
 }

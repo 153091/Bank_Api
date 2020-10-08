@@ -29,17 +29,35 @@ POST http://localhost:8080/account/register
 Content-Type: application/json
 
 {
-  "account_number":40165764,
-  "user_id":1
+  "accountNumber":40165764,
+    "userId":1
 }
 
 
 
 ###
-POST http://localhost:8080/account/register
+POST http://localhost:8080/card/register
 Content-Type: application/json
 
 {
-  "account_number":40165764,
-  "user_id":1
+  "cardNumber":401165764,
+  "cardBalance":1122,
+  "accountId": 1
+}
+
+###
+GET /card/balance/1
+
+
+###
+GET /card/balance/add/1, 400
+
+###
+
+POST http://localhost:8080/card/balance/add
+Content-Type: application/json
+
+{
+  "cardId": 1,
+  "amount":1122
 }

@@ -15,6 +15,7 @@ public class CardRepository implements CrudRepository<Card, Long> {
     private static final String SAVE_CARD = "INSERT INTO CARD (CARD_NUMBER, CARD_BALANCE, ACCOUNT_ID) VALUES (?, ?, ?);";
     private final static String UPDATE_CARD = "UPDATE CARD SET CARD_NUMBER = ?, CARD_BALANCE = ?, ACCOUNT_ID = ?";
     private final static String DELETE_CARD = "DELETE FROM CARD WHERE ID = ?;";
+    private final static String ADD_BALANCE = "UPDATE CARD SET CARD_BALANCE = ? WHERE ID = ?";
 
     private final DataSource dataSource;
 
@@ -71,7 +72,7 @@ public class CardRepository implements CrudRepository<Card, Long> {
                      Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setInt(1, card.getCardNumber());
-            statement.setInt(2, card.getCardBalance());
+            statement.setDouble(2, card.getCardBalance());
             statement.setLong(3, card.getAccountId());
 
             int affectedRows = statement.executeUpdate();
@@ -97,13 +98,31 @@ public class CardRepository implements CrudRepository<Card, Long> {
              PreparedStatement statement = connection.prepareStatement(UPDATE_CARD)) {
 
             statement.setInt(1, card.getCardNumber());
-            statement.setInt(2, card.getCardBalance());
+            statement.setDouble(2, card.getCardBalance());
             statement.setLong(3, card.getAccountId());
 
             statement.execute();
         }
     }
 
+    public Card addBalance(Long id, double amount)  throws SQLException{
+        Card byId = getById(id);
+        double result = byId.getCardBalance() + amount;
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(ADD_BALANCE)) {
+
+            statement.setDouble(1, result);
+            statement.setLong(2, id);
+
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+            byId.setCardBalance(result);
+        }
+        return byId;
+    }
 
     private List<Card> toListCard(ResultSet resultSet) throws SQLException {
         List<Card> ret = new ArrayList<>();
@@ -112,7 +131,7 @@ public class CardRepository implements CrudRepository<Card, Long> {
             Card card = new Card();
             card.setId(resultSet.getLong("id"));
             card.setCardNumber(resultSet.getInt("card_number"));
-            card.setCardBalance(resultSet.getInt("card_balance"));
+            card.setCardBalance(resultSet.getDouble("card_balance"));
             card.setAccountId(resultSet.getLong("account_id"));
 
             ret.add(card);

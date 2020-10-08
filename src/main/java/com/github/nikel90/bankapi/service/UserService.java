@@ -18,11 +18,11 @@ public class UserService {
     }
 
     public UserDto register(User user) throws SQLException {
-        return fromUserDto(userRepository.save(user));
+        return UserDto.fromUser(userRepository.save(user));
     }
 
     public UserDto getUserById(long id) throws SQLException {
-        return fromUserDto(userRepository.getById(id));
+        return UserDto.fromUser(userRepository.getById(id));
     }
 
     public List<UserDto> getAll() throws SQLException {
@@ -30,13 +30,9 @@ public class UserService {
         List<UserDto> listUserDto = new ArrayList<>();
 
         for (User user : listUser) {
-            listUserDto.add(fromUserDto(user));
+            listUserDto.add(UserDto.fromUser(user));
         }
         return listUserDto;
     }
 
-    private UserDto fromUserDto(User user) {
-        return new UserDto(user.getId(), user.getSurname(), user.getName(), user.getAge(), user.getLogin());
-
-    }
 }
