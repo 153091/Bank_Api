@@ -19,11 +19,11 @@ public class CardService {
     }
 
     public CardDto register(Card card) throws SQLException {
-        return fromCard(cardRepository.save(card));
+        return CardDto.fromCard(cardRepository.save(card));
     }
 
     public CardDto getCardById(long id) throws SQLException {
-        return fromCard(cardRepository.getById(id));
+        return CardDto.fromCard(cardRepository.getById(id));
     }
 
     public List<CardDto> getAll() throws SQLException {
@@ -31,17 +31,13 @@ public class CardService {
         List<CardDto> listCardDto = new ArrayList<>();
 
         for (Card card : listCard) {
-            listCardDto.add(fromCard(card));
+            listCardDto.add(CardDto.fromCard(card));
         }
         return listCardDto;
     }
 
     public CardDto addBalance(CardAddDto cardAddDto) throws SQLException {
-        return fromCard(cardRepository.addBalance(cardAddDto.getCardId(), cardAddDto.getAmount()));
-    }
-
-    private CardDto fromCard(Card card) {
-        return new CardDto(card.getId(), card.getCardNumber(), card.getCardBalance(), card.getAccountId());
+        return CardDto.fromCard(cardRepository.addBalance(cardAddDto.getCardId(), cardAddDto.getAmount()));
     }
 }
 

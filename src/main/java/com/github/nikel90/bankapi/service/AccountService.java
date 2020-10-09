@@ -18,11 +18,11 @@ public class AccountService {
     }
 
     public AccountDto register(Account account) throws SQLException {
-        return fromAccountDto(accountRepository.save(account));
+        return AccountDto.fromAccount(accountRepository.save(account));
     }
 
     public AccountDto getAccountById(long id) throws SQLException {
-        return fromAccountDto(accountRepository.getById(id));
+        return AccountDto.fromAccount(accountRepository.getById(id));
     }
 
     public List<AccountDto> getAll() throws SQLException {
@@ -30,12 +30,8 @@ public class AccountService {
         List<AccountDto> listAccountDto = new ArrayList<>();
 
         for (Account account : listAccount) {
-            listAccountDto.add(fromAccountDto(account));
+            listAccountDto.add(AccountDto.fromAccount(account));
         }
         return listAccountDto;
-    }
-
-    private AccountDto fromAccountDto(Account account) {
-        return new AccountDto(account.getId(), account.getAccountNumber(), account.getUserId());
     }
 }

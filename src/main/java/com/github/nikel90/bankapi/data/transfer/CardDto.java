@@ -1,5 +1,7 @@
 package com.github.nikel90.bankapi.data.transfer;
 
+import com.github.nikel90.bankapi.data.model.Card;
+
 public class CardDto {
     private long id;
     private int cardNumber;
@@ -43,5 +45,9 @@ public class CardDto {
 
     public void setAccountId(long accountId) {
         this.accountId = accountId;
+    }
+
+    public static CardDto fromCard(Card card) {
+        return new CardDto(card.getId(), card.getCardNumber(), card.getCardBalance(), card.getAccountId());
     }
 }

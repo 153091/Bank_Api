@@ -1,5 +1,7 @@
 package com.github.nikel90.bankapi.data.transfer;
 
+import com.github.nikel90.bankapi.data.model.Account;
+
 public class AccountDto {
     private long id;
     private int accountNumber;
@@ -33,5 +35,9 @@ public class AccountDto {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public static AccountDto fromAccount(Account account) {
+        return new AccountDto(account.getId(), account.getAccountNumber(), account.getUserId());
     }
 }

@@ -1,11 +1,11 @@
-package com.github.nikel90.bankapi;
-
+package com.github.nikel90.bankapi.bankApiTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.github.nikel90.bankapi.data.model.Account;
 import com.github.nikel90.bankapi.data.model.User;
+import com.github.nikel90.bankapi.data.repository.AccountRepository;
 import com.github.nikel90.bankapi.data.repository.UserRepository;
-import com.github.nikel90.bankapi.data.transfer.UserDto;
+import com.github.nikel90.bankapi.data.transfer.AccountDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,25 +13,24 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class BankApiTest {
+public class AccountApiTest {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    AccountRepository accountRepository;
 
     @Autowired
     private ObjectMapper mapper;
@@ -39,29 +38,29 @@ public class BankApiTest {
     @Autowired
     private MockMvc mockMvc;
 
-
     @BeforeEach
     void setUp() throws SQLException {
-        userRepository.save(new User("Nikita", "Bazf", 12, "fadas", "23412"));
+        userRepository.save(new User("Nikita", "Bazhenov", 24, "nikel-90", "12345"));
+        accountRepository.save(new Account(123123, 1));
     }
 
 
     @Test
-    void getAllUsers() throws Exception {
-        List<User> users = userRepository.getAll();
-        List<UserDto> usersDto= new ArrayList<>();
+    void getAllAccount() throws Exception {
+        List<Account> accounts = accountRepository.getAll();
+        List<AccountDto> accountDto = new ArrayList<>();
 
-        for (User user : users) {
-            usersDto.add(UserDto.fromUser(user));
+        for (Account account: accounts) {
+            accountDto.add(AccountDto.fromAccount(account));
         }
 
-        String expected = mapper.writeValueAsString(usersDto);
+        String expected = mapper.writeValueAsString(accountDto);
 
 //        final String expected = mapper.writeValueAsString(users
 //                .stream()
 //                .map(UserDto::fromUser)
 //                .collect(Collectors.toList()));
-        mockMvc.perform(getRequest("/user"))
+        mockMvc.perform(getRequest("/account"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(expected));
     }
@@ -74,3 +73,5 @@ public class BankApiTest {
     }
 
 }
+
+
