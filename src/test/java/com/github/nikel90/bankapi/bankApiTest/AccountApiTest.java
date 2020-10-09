@@ -56,10 +56,6 @@ public class AccountApiTest {
 
         String expected = mapper.writeValueAsString(accountDto);
 
-//        final String expected = mapper.writeValueAsString(users
-//                .stream()
-//                .map(UserDto::fromUser)
-//                .collect(Collectors.toList()));
         mockMvc.perform(getRequest("/account"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(expected));

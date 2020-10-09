@@ -13,17 +13,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -57,10 +53,6 @@ public class UserApiTest {
 
         String expected = mapper.writeValueAsString(usersDto);
 
-//        final String expected = mapper.writeValueAsString(users
-//                .stream()
-//                .map(UserDto::fromUser)
-//                .collect(Collectors.toList()));
         mockMvc.perform(getRequest("/user"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(expected));

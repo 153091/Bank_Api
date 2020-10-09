@@ -13,8 +13,8 @@ public class AccountRepository implements CrudRepository <Account, Long> {
     private static final String GET_ACCOUNT_BY_ID = "SELECT * FROM ACCOUNT WHERE ID = ?;";
     private static final String GET_ALL_ACCOUNT = "SELECT * FROM ACCOUNT;";
     private static final String SAVE_ACCOUNT = "INSERT INTO ACCOUNT (ACCOUNT_NUMBER, USER_ID) VALUES (?, ?);";
-    private final static String UPDATE_ACCOUNT = "UPDATE ACCOUNT SET ACCOUNT_NUMBER = ?, USER_ID = ?;";
-    private final static String DELETE_ACCOUNT = "DELETE FROM ACCOUNT WHERE ID = ?;";
+    private static final String UPDATE_ACCOUNT = "UPDATE ACCOUNT SET ACCOUNT_NUMBER = ?, USER_ID = ?;";
+    private static final String DELETE_ACCOUNT = "DELETE FROM ACCOUNT WHERE ID = ?;";
 
     private final DataSource dataSource;
 

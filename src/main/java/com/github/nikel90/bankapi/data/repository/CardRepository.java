@@ -13,9 +13,9 @@ public class CardRepository implements CrudRepository<Card, Long> {
     private static final String GET_CARD_BY_ID = "SELECT * FROM CARD WHERE ID = ?;";
     private static final String GET_ALL_CARD = "SELECT * FROM CARD;";
     private static final String SAVE_CARD = "INSERT INTO CARD (CARD_NUMBER, CARD_BALANCE, ACCOUNT_ID) VALUES (?, ?, ?);";
-    private final static String UPDATE_CARD = "UPDATE CARD SET CARD_NUMBER = ?, CARD_BALANCE = ?, ACCOUNT_ID = ?";
-    private final static String DELETE_CARD = "DELETE FROM CARD WHERE ID = ?;";
-    private final static String ADD_BALANCE = "UPDATE CARD SET CARD_BALANCE = ? WHERE ID = ?";
+    private static final String UPDATE_CARD = "UPDATE CARD SET CARD_NUMBER = ?, CARD_BALANCE = ?, ACCOUNT_ID = ?";
+    private static final String DELETE_CARD = "DELETE FROM CARD WHERE ID = ?;";
+    private static final String ADD_BALANCE = "UPDATE CARD SET CARD_BALANCE = ? WHERE ID = ?";
 
     private final DataSource dataSource;
 

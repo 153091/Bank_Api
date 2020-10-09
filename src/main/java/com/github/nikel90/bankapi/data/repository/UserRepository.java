@@ -13,8 +13,8 @@ public class UserRepository implements CrudRepository<User, Long> {
     private static final String GET_USER_BY_ID = "SELECT * FROM USER WHERE ID = ?;";
     private static final String GET_ALL_USERS = "SELECT * FROM USER;";
     private static final String SAVE_USER = "INSERT INTO USER (SURNAME, NAME, AGE, LOGIN, PASSWORD) VALUES (?, ?, ?, ?, ?);";
-    private final static String UPDATE_USER = "UPDATE USER SET SURNAME = ?, NAME = ?, AGE = ?, LOGIN = ?, PASSWORD = ?;";
-    private final static String DELETE_USER = "DELETE FROM USER WHERE ID = ?;";
+    private static final String UPDATE_USER = "UPDATE USER SET SURNAME = ?, NAME = ?, AGE = ?, LOGIN = ?, PASSWORD = ?;";
+    private static final String DELETE_USER = "DELETE FROM USER WHERE ID = ?;";
 
     private final DataSource dataSource;
 

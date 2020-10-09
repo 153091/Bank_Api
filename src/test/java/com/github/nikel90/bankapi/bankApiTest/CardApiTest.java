@@ -54,7 +54,7 @@ public class CardApiTest {
 
 
     @Test
-    void getAllAccount() throws Exception {
+    void getAllCard() throws Exception {
         List<Card> cards = cardRepository.getAll();
         List<CardDto> cardDto = new ArrayList<>();
 
@@ -64,10 +64,6 @@ public class CardApiTest {
 
         String expected = mapper.writeValueAsString(cardDto);
 
-//        final String expected = mapper.writeValueAsString(users
-//                .stream()
-//                .map(UserDto::fromUser)
-//                .collect(Collectors.toList()));
         mockMvc.perform(getRequest("/card"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(expected));
